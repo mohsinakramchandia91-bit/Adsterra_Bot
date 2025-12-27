@@ -1,0 +1,30 @@
+name: Burraq Adsterra Money Printer
+
+on:
+  workflow_dispatch: # Manual Button
+  schedule:
+    - cron: '0 */6 * * *' # Har 6 ghantay baad auto restart
+
+jobs:
+  money-maker:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        instance: [1, 2, 3, 4, 5] # 5 Bots aik waqt mein
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install Libraries
+      run: |
+        pip install selenium
+
+    - name: Run Adsterra Bot
+      run: python main.py
